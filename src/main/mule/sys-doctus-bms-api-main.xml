@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+    <apikit:config name="sys-doctus-bms-api-config" api="sys-doctus-bms-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<flow name="sys-doctus-bms-api-main">
+        <http:listener path="/api/*" config-ref="HTTP_Listener_config_with_one_way_handshake">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+		<ee:transform doc:name="set sourceId and CorrelationId" doc:id="62a51f18-56de-41c4-8f77-9e886d87e4ba" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="correlationId" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes.headers.correlationId default correlationId]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<set-variable value="#[attributes.headers.transactionId default vars.correlationId]" doc:name="setTransactionId" doc:id="10261399-08b7-4aee-9ac7-3c2df8b33810" variableName="transactionId" />
+		<apikit:router config-ref="sys-doctus-bms-api-config" />
+    </flow>
+    <flow name="get:\movieTickets:sys-doctus-bms-api-config">
+		<flow-ref doc:name="Flow Reference" doc:id="925279ab-de95-4cdf-9be9-e51d9841a768" name="sys-doctus-bms-api-get-implementationFlow"/>
+    </flow>
+    <flow name="post:\movieTickets:application\json:sys-doctus-bms-api-config">
+		<flow-ref doc:name="Flow Reference" doc:id="02c96851-6429-4d4b-8fbe-1282e39e04e5" name="sys-doctus-bms-api-post-implementationFlow"/>
+    </flow>
+</mule>

@@ -1,0 +1,11 @@
+{
+  "sampleData": {
+    "d14ca982-f262-4586-b837-ab28f8581513": {
+      "payload": "sample_data/list_json.json"
+    },
+    "e8f1cafe-b76b-4d46-b8b8-2bba1c4892fa": {
+      "vars-payloadfromquery": "sample_data/list_moviedetails__c.dwl",
+      "vars-payloadfrompost": "sample_data/java.dwl"
+    }
+  }
+}
