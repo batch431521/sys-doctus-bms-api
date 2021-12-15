@@ -9,7 +9,7 @@
 	<version>1.0.1</version>
 	<packaging>mule-application</packaging>
 
-	<name>sys-doctus-bms-api</name>
+	<name>sys-doctus-bms-api</name> 
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -44,6 +44,7 @@
 						<region>us-east-2</region>
 						<workers>1</workers>
 						<workerType>MICRO</workerType>
+						<objectStoreV2>true</objectStoreV2>
 					</cloudHubDeployment>
 					<coverage>
 						<runCoverage>true</runCoverage>
