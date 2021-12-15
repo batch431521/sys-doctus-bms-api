@@ -27,7 +27,6 @@ output application/json
 payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="Logger" doc:id="82c765e6-ab54-4834-8fa4-597349a1cdc5" message="#[payload]" />
 		<ee:transform doc:name="Transform Message" doc:id="d14ca982-f262-4586-b837-ab28f8581513">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
@@ -37,9 +36,13 @@ var movieName = if(!isEmpty(vars.queryParams.movieName)) vars.queryParams.movieN
 var dimension = if(!isEmpty(vars.queryParams.dimension)) vars.queryParams.dimension else ""
 var language = if(!isEmpty(vars.queryParams.language)) vars.queryParams.language else ""
 ---
+if(isEmpty(vars.queryParams))
+(payload)
+else
  payload filter (($.movieid__c == movieId) or ($.Name == movieName) or ($.dimension__c == dimension) or ($.language__c == language))]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="82c765e6-ab54-4834-8fa4-597349a1cdc5" message="#[payload]" />
 	</sub-flow>
 	<flow name="sys-doctus-bms-api-post-implementationFlow" doc:id="4164d390-4fee-425d-9687-6ef60762bbcb" >
 		<logger level="INFO" doc:name="Logger" doc:id="fd488e26-8eb0-4bfd-8396-72a54f8c6f2f" message="#[payload]"/>
