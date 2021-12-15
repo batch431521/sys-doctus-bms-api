@@ -16,6 +16,7 @@ output application/json
 attributes.queryParams default {}]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="36d42327-9781-4fd1-9443-9e69aa0eda57" message="entry"/>
 		<salesforce:query doc:name="Query" doc:id="b2884757-8954-4628-9cd6-54d30dae8475" config-ref="Salesforce_Config">
 			<salesforce:salesforce-query><![CDATA[select Id,Name,movieid__c,availableSeats__c,dimension__c,genre__c,language__c,price__c,showTiming__c,venue__c from moviedetails__c]]></salesforce:salesforce-query>
 		</salesforce:query>
