@@ -56,6 +56,16 @@ else
 	movieid : payload.movieId
 }]]]></salesforce:parameters>
 		</salesforce:query>
+		<ee:transform doc:name="Transform Message" doc:id="dc1f8ccd-571a-4c96-bb05-bf6ee0607a5c" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="post_var" ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
 		<ee:transform doc:name="Transform Message" doc:id="9f7a8436-2377-4b05-9dbc-36bea84bb1e1" >
 			<ee:message >
 			</ee:message>
@@ -79,6 +89,14 @@ payload[0].availableSeats__c as Number]]></ee:set-variable>
 	genre__c: pay.genre__c,
 	dimension__c: pay.dimension__c}]]]]></salesforce:records>
 		</salesforce:update>
+				<ee:transform doc:name="Transform Message" doc:id="c8e26214-d561-408c-9a43-72939186e821" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+vars.post_var]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
 			</when>
 			<otherwise >
 				<ee:transform doc:name="Transform Message" doc:id="c2b91375-cb46-4337-9702-5d03d756698d" >

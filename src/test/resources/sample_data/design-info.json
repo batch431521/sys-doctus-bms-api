@@ -13,6 +13,9 @@
     "195b486f-86e0-434d-86b5-31cba60d1fe6": {
       "vars-sf_var": "sample_data/defaultnumbertype.json",
       "vars-customerseat": "sample_data/defaultnumbertype.dwl"
+    },
+    "c8e26214-d561-408c-9a43-72939186e821": {
+      "vars-post_var": "sample_data/list_json_1.json"
     }
   }
 }
